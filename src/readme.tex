@@ -1,0 +1,113 @@
+\input texinfo
+@setfilename readme
+@settitle Algorithmic trading
+@copying
+This is a short example of manual written in .texi format
+@end copying
+
+@titlepage
+@title Algorithmic trading
+@author by pfidelia, imagnifi, wloyd @copyright{} 2022
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents
+
+@node Top
+@top Algorithmic trading program manual
+
+This manual is for GNU Sample
+@comment comment (version @value{VERSION}, @value{UPDATED}).
+
+@menu
+* Program overview::    Program specifications
+* Mazes::    Build and solve a maze
+* Caves::    Caves
+@end menu
+
+@node Program overview, Interpolation,,
+@chapter Program overview
+
+The data are loaded into the program from a file with stock quotes with the .csv extension.@*
+The file contains data in the form of a table, where the first column is the date, @*
+the second column is the value of the function@*
+
+The user sets the number of points on which the graph should be plotted (the number of points is not less than in the loaded file)@*
+All points are evenly distributed between the start and end dates@
+Two interpolation methods are implemented: Cubic Spline and Newton's Polynomial of nth degree.@*
+There is a button in the interface for drawing the cubic spline graph@*
+There is a button in the interface for drawing the graph by the Newton polynomial of nth degree@*
+There is a field in the interface for entering the degree of the Newton polynomial@*
+There is a button in the interface for clearing the field to draw graphs (the field is cleared only when you click on this button or new data is uploaded)@*
+There can be up to 5 graphs displayed in the field at the same time (all graphs have different color)@*
+If there are already 5 graphs displayed in the field, the buttons for drawing new graphs is blocked@*
+The interface has to contain the following information about the graphs:
+Color
+Name of the file from which the data were taken
+Interpolation method (specifying the degree if it is a Newton polynomial)
+
+Program is able to output the values of the stock quotes function obtained by both interpolation methods according to a user-defined argument value (date and time)
+The program is developed in C++ language of C++17 standard.@*
+Makefile targets: all, install, uninstall, clean, dvi, dist, tests.@*
+GUI implemented basing on Qt 6.@*
+
+@node Interpolation,Approximation,Program overview,
+@chapter Interpolation
+
+@node Load a maze, Create a maze, ,Mazes
+@section Load a maze
+
+
+@node Create a maze,Save to disk,Load a maze,Mazes
+@section Create a maze
+To create a maze, you should specify its height and width using spinboxes. Maximum size is 50x50.
+Then press "Build" button to view the maze.
+Maze is generated using @url{https://prog.world/maze-generation-ellers-algorithm/,,Eller's algorithm}, 
+which creates 'perfect' mazes, having only a single path between any two cells, one row at a time.
+
+@node Save to disk,Find a route,Create a maze,Mazes
+@section Save to disk
+Once created, the maze may be stored in the format described above. To do that press "Save" button.
+
+@node Find a route,,Save to disk,Mazes
+@section Find a route
+To find the shortest route from any point within maze to another, simply click on the starting point, 
+then on the destination. The program finds the route and shows it step-by-step, along with indicating
+the number of steps.
+@node Caves,,Mazes,
+@chapter Caves
+
+@node Caves description,Cave Generation,Caves
+@section Caves description
+A cave that has passed 0 simulation steps (only initialized) can be stored in the file as a number 
+of rows and columns, as well as a matrix containing the positions of "live" and "dead" cells.
+@format
+An example of such a file:
+4 4
+0 1 0 1
+1 0 0 1
+0 1 0 0
+0 0 1 1
+@end format
+
+@node Cave Generation, ,Caves description,
+@section Cave Generation
+The caves are being generated using the cellular automaton. 
+This kind of generation uses an idea similar to the Game of Life. @*
+The idea of the algorithm consists of implementing only two steps: 
+first, the whole field is filled randomly with walls - i.e., for each cell 
+it is randomly determined whether it will be free or impassable - 
+and then the map state is updated several times according to the conditions, 
+similar to the birth/death ones in the Game of Life. @*
+The rules are simpler than in the Game of Life - 
+there are two special variables, one for "birth" of "dead" cells (the "birth" limit) 
+and one for destruction of "live" cells (the "death" limit).
+If "live" cells are surrounded by "live" cells, the number of which is less than the "death" limit, 
+they "die". In the same way, if "dead" cells are next to "live" cells, the number of which is greater 
+than the "birth" limit, they become "live".@*
+
+@contents
+
+@bye
